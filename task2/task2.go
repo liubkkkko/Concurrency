@@ -6,20 +6,23 @@ import (
 
 func main() {
 	ch := make(chan int, 3)
+	var resoult int
 	n := [][]int{
 		{2, 6, 9, 24},
 		{7, 3, 94, 3, 0},
 		{4, 2, 8, 35},
 	}
-	for i := 0; i < 3; i++ {
+
+	for i := 0; i < len(n); i++ {
 		go func(i int) {
 			ch <- sum(n[i])
 		}(i)
 	}
-	res1 := <-ch
-	res2 := <-ch
-	res3 := <-ch
-	fmt.Println("result:", res1+res2+res3)
+
+	for i := 0; i < len(n); i++ {
+		resoult += <-ch
+	}
+	fmt.Println("result:", resoult)
 }
 
 func sum(slice []int) int {
